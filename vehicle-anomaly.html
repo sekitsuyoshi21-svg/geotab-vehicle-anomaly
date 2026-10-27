@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>車両異常・故障管理</title>
+  <link rel="stylesheet" href="vehicle-anomaly.css">
+</head>
+<body>
+  <div id="vehicle-anomaly-app" class="app-shell" aria-live="polite">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">MyGeotab Add-In</p>
+        <h1>車両異常・故障管理</h1>
+        <p class="subtitle">フリート全体の異常と対応優先度を確認</p>
+      </div>
+      <div class="header-actions">
+        <span id="lastUpdated" class="last-updated">未更新</span>
+        <button id="refreshButton" class="button secondary" type="button">↻ 更新</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="summary-grid" aria-label="車両状態サマリー">
+        <button class="summary-card critical" data-severity="重大"><span>重大</span><strong id="criticalCount">0</strong><small>件</small></button>
+        <button class="summary-card warning" data-severity="警告"><span>警告</span><strong id="warningCount">0</strong><small>件</small></button>
+        <button class="summary-card info" data-severity="情報"><span>情報</span><strong id="infoCount">0</strong><small>件</small></button>
+        <button class="summary-card normal" data-severity="すべて"><span>取得した異常</span><strong id="totalCount">0</strong><small>件</small></button>
+      </section>
+
+      <section class="panel">
+        <div class="filters">
+          <label class="search-wrap"><span class="sr-only">検索</span><input id="searchInput" type="search" placeholder="車両名・故障コード・内容を検索"></label>
+          <select id="severityFilter" aria-label="重要度"><option>すべて</option><option>重大</option><option>警告</option><option>情報</option></select>
+          <select id="typeFilter" aria-label="異常種別"><option>すべて</option><option>車両故障</option><option>GOデバイス</option><option>通信</option><option>その他</option></select>
+          <select id="periodFilter" aria-label="取得期間"><option value="1">過去24時間</option><option value="7" selected>過去7日</option><option value="30">過去30日</option></select>
+          <button id="resetButton" class="button link" type="button">リセット</button>
+        </div>
+
+        <div id="statusMessage" class="status-message">読み込み準備中...</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>車両</th><th>状態</th><th>故障コード</th><th>異常内容</th><th>種別</th><th>発生日時</th><th>回数</th><th></th></tr></thead>
+            <tbody id="faultTableBody"></tbody>
+          </table>
+        </div>
+        <div id="emptyState" class="empty-state" hidden>条件に一致する異常はありません。</div>
+      </section>
+    </main>
+  </div>
+
+  <div id="drawerBackdrop" class="backdrop" hidden></div>
+  <aside id="detailDrawer" class="drawer" aria-hidden="true" aria-labelledby="drawerTitle">
+    <button id="closeDrawer" class="drawer-close" aria-label="閉じる">×</button>
+    <p class="muted">車両異常詳細</p>
+    <h2 id="drawerTitle">-</h2>
+    <div id="drawerStatus" class="detail-status"></div>
+    <dl class="detail-grid">
+      <div><dt>データソース</dt><dd id="detailSource">-</dd></div>
+      <div><dt>発生回数</dt><dd id="detailCount">-</dd></div>
+      <div><dt>発生日時</dt><dd id="detailOccurred">-</dd></div>
+      <div><dt>警告灯</dt><dd id="detailLamp">-</dd></div>
+    </dl>
+    <div class="recommendation"><strong>確認・対応</strong><p id="detailRecommendation">-</p></div>
+    <p class="disclaimer">表示内容だけで安全性や故障原因を断定せず、必要に応じて整備担当者が確認してください。</p>
+  </aside>
+
+  <script src="vehicle-anomaly.js"></script>
+</body>
+</html>

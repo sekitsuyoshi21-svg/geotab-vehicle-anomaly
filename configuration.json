@@ -1,0 +1,15 @@
+{
+  "name": "vehicle-anomaly",
+  "supportEmail": "seco37989@gmail.com",
+  "version": "1.0.0",
+  "items": [
+    {
+      "url": "https://sekitsuyoshi21-svg.github.io/geotab-vehicle-anomaly/index.html",
+      "path": "AddIns",
+      "menuName": {
+        "en": "Vehicle Anomaly",
+        "ja": "車両異常管理"
+      }
+    }
+  ]
+}
